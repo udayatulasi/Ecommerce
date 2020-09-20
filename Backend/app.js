@@ -12,7 +12,6 @@ const cors = require("cors");
 dotenv.config({path:'./config/db.env'});
 DBconnection();
 
-// checking two
 
 
 // middleware
