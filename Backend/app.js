@@ -1,24 +1,17 @@
-require('dotenv').config();
-
-const mongoose = require('mongoose');
+const dotenv = require('dotenv')
 const express = require("express")
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
-// const authRoutes = require("./routes/auth/auth")    
+
 
 // DB connect
+dotenv.config({path:'./config/db.env'});
+DBconnection();
 
-mongoose.connect(process.env.DATABASE,
-{useNewUrlParser:true,
-useUnifiedTopology:true,
-useCreateIndex:true,
-}
-).then(()=>{
-    console.log("DB connected")
-})
 
 
 // middleware
@@ -27,12 +20,6 @@ app.use(cookieParser( ));
 app.use(cors());
 
 
-// routes
-app.use("/api",authRoutes)
-app.use("/api",userRoutes)
-app.use("/api",categoryRoutes)
-app.use("/api",ProductRoutes)
-app.use("/api",OrderRoutes)
 
 
 
