@@ -28,11 +28,11 @@ app.use(cors());
 
 
 // routes
-// app.use("/api",authRoutes)
-// app.use("/api",userRoutes)
-// app.use("/api",categoryRoutes)
-// app.use("/api",ProductRoutes)
-// app.use("/api",OrderRoutes)
+app.use("/api",authRoutes)
+app.use("/api",userRoutes)
+app.use("/api",categoryRoutes)
+app.use("/api",ProductRoutes)
+app.use("/api",OrderRoutes)
 
 
 
