@@ -11,7 +11,7 @@ const CategoryIdSchema = new mongoose.Schema({
 
 })
 
-module.exports=mongoose.model("Category",CategoryIdSchema)
+const Category=mongoose.model("Category",CategoryIdSchema)
 
 
 const DepartmentsSchema = new mongoose.Schema({
@@ -36,4 +36,6 @@ const DepartmentsSchema = new mongoose.Schema({
 
 
 
-module.exports=mongoose.model("Departments",DepartmentsSchema)
+const Departments=mongoose.model("Departments",DepartmentsSchema)
+
+module.exports = {Departments,Category}
