@@ -25,8 +25,8 @@ app.use(cors());
 
 // routes
 
-// app.use("/ecommerce",authRoutes)
-// app.use("/ecommerce",orderRoutes)
+app.use("/ecommerce",authRoutes)
+app.use("/ecommerce",orderRoutes)
 
 
 
