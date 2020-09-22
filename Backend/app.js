@@ -6,7 +6,8 @@ const cookieParser = require("cookie-parser");
 const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
-
+const authRoutes = require("./routes/auth")
+const userRoutes = require("./routes/user")
 
 // DB connect
 dotenv.config({path:'./config/db.env'});
@@ -19,8 +20,9 @@ app.use(bodyParser.json());
 app.use(cookieParser( ));
 app.use(cors());
 
-
-
+// routes
+app.use("/api", authRoutes)
+app.use("/api", userRoutes)
 
 
 // port

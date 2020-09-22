@@ -11,8 +11,8 @@ const OrderItemsSchema = new mongoose.Schema({
     price:Number,
     status:{
         type:String,
-        default:"Recieved",
-        enum:["Cancelled","Delivered","Shipped","Processing","Recieved","PaymentRequired"]
+        default:"Received",
+        enum:["Cancelled","Delivered","Shipped","Processing","Received","PaymentRequired"]
     },
 
 })
