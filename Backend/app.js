@@ -7,6 +7,9 @@ const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
 
+// const orderRoutes = require("./routes/order")
+
+
 
 // DB connect
 dotenv.config({path:'./config/db.env'});
@@ -18,6 +21,12 @@ DBconnection();
 app.use(bodyParser.json());
 app.use(cookieParser( ));
 app.use(cors());
+
+
+// routes
+
+// app.use("/ecommerce",authRoutes)
+// app.use("/ecommerce",orderRoutes)
 
 
 
