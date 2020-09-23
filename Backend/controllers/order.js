@@ -47,42 +47,32 @@ exports.getAOrder = () => {
 
 // Create product
 exports.createOrder = async( req, res) => {
-
     try {
         const order = await Order.create(req.body)
         if(!order) {
             return res.status(400).json({success : false,data: 'order creation failed'})
-
         }
         return res.status(200).json({ success: true, data: order})
-
     }
-
     catch( err){
         return res.status(400).json({success : false,data: 'order creation failed'})
-       
     }
-
 }
 
 
 // Update product
 exports.updateOrder = async( req, res) => {
-
     try {
-        const order = await Order.findByIdAndUpdate(req.params.id, req.body)
+        const order = await Order.findByIdAndUpdate(req.params.id, {$set:req.body})
         if(!order) {
             return res.status(400).json({success : false,data: 'Order updation failed'
             })
 
         }
       return res.status(200).json({ success: true, data:order})
-
     }
-
     catch( err){
         return res.status(400).json({success : false,data: 'Order updation failed'})
-       
     }
 
 }
@@ -109,9 +99,10 @@ exports.deleteOrder = async( req, res) =>{
 
 exports.changeOrderstatus = async (req,res) =>{
     try{
-        
+        let orderStatus = await Order.findByIdAndUpdate(req.body.orderId,{$set:{status:req.body.orderStatus}},{upsert:true,new:true,setDefaultsOnInsert:true})
+        return res.status(201).json({success:true,data:orderStatus})
     }
     catch(error){
-
+        return res.status(400).json({success:false,data:"orderStatus updatation failed"})
     }
 }

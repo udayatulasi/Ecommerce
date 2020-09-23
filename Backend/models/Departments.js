@@ -5,7 +5,6 @@ const CategoryIdSchema = new mongoose.Schema({
     category:{
         type:ObjectId,
         ref:"Categories",
-        required:true,
         unique:true
     }
 
@@ -22,9 +21,7 @@ const DepartmentsSchema = new mongoose.Schema({
         maxlength:32,
         unique:true
     },
-    categories: {
-        categories:[CategoryIdSchema],
-    },
+    categories: [CategoryIdSchema],
     photo:{
         data: Buffer,
         contentType: String

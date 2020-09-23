@@ -5,17 +5,17 @@ const {isAdmin,isAuth,isSignedIn}= require("../../controllers/auth/auth");
 const { updateDepartment,deleteDepartment,createDepartment,getAllDepartments } = require("../controllers/order");
 
 
-router.post("/department/:userid",isSignedIn,isAuth,isAdmin,createDepartment)
-router.post("/department/createCategory/:userid",isSignedIn,isAuth,isAdmin,createCategory)
+router.post("/department/:userid",createDepartment)
+// router.post("/department/createCategory/:userid",createCategory)
 
 
 router.get("/departments",getAllDepartments)
-router.get("/department/:department",getAllCategories)
+// router.get("/department/:department",getAllCategories)
 
-router.put("/departments/:department",isSignedIn,isAuth,isAdmin,updateDepartment)
+router.put("/departments/:department",updateDepartment)
 
-router.delete("/department/:userid",isSignedIn,isAuth,isAdmin,deleteDepartment)
-router.delete("/department/:categoryId",isSignedIn,isAuth,isAdmin,deleteCategory)
+router.delete("/department/:userid",deleteDepartment)
+// router.delete("/department/:categoryId",deleteCategory)
 
 
 
