@@ -18,7 +18,7 @@ const OrderItemsSchema = new mongoose.Schema({
 })
 
 
-const Cart = mongoose.model("Cart",CartSchema)
+const Cart = mongoose.model("Cart",OrderItemsSchema)
 
 
 

@@ -6,13 +6,13 @@ const { signin, signup, signout } = require("../conrollers/auth")
 
 router.post("/signup", [
     check("name").isLength({min: 3}).withMessage("name should be min 3 char"),
-    check("email").isEmail().withMessage("email should be required"),
+    check("email").isEmail().withMessage("enter valid email"),
     check("password").isLength({min: 5}).withMessage("password should be min 5 char")
-], signup)
+],
+ signup)
 
-router.post("/signin", [
-    check("email").isEmail().withMessage("email should be required"),
-    check("password").isLength({min: 5}).withMessage("password should be min 5 char")
+router.post("/signin",[
+    check("email").isEmail().withMessage("enter valid email"),
 ], signin)
 
 router.get("/signout", signout)
