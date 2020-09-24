@@ -13,7 +13,7 @@ const OrderItemsSchema = new mongoose.Schema({
 })
 
 
-const Cart = mongoose.model("Cart",OrderItemsSchema)
+module.exports = mongoose.model("Cart",OrderItemsSchema)
 
 
 
@@ -41,5 +41,6 @@ const OrderSchema = new mongoose.Schema({
         enum:["Cancelled","Delivered","Shipped","Processing","Recieved","PaymentRequired"]
     },
 },{timestamps:true});
+
 
 module.exports = mongoose.model("Order",OrderSchema)
