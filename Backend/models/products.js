@@ -17,17 +17,16 @@ const productsSchema = new mongoose.Schema({
     },
 //    It should be an array
     size : {
-        type : Array,
+        type : String,
         maxlength : 32,
         default : 'S',
         enum : ["XXL","XL","L","M","S"],
-        unique : true,
-        required : true
+       required : true
     },
 
     category : {
         type : mongoose.Schema.Types.ObjectId,
-        ref  : Categories
+        ref  : "Category"
     },
 
     price : {
@@ -44,7 +43,8 @@ const productsSchema = new mongoose.Schema({
 
     stock : {
         type : Number,
-        trim : true
+        trim : true,
+        required : true
     },
 
     image : {

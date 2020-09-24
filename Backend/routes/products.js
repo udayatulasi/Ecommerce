@@ -14,7 +14,7 @@ const {
 
 
 
-router.param('/:productId', getProductById);
+router.param('productId', getProductById);
 
 // Both admin and user routes
 router.get('/products', getAllProducts);

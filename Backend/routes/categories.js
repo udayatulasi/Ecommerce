@@ -12,7 +12,7 @@ const {
 } = require("../controllers/categories");
 
 
-router.param('/:categoryId', getCategoryById);
+router.param('categoryId', getCategoryById);
 
 // Both admin and user routes
 router.get('/categories', getAllCategories);
@@ -20,7 +20,7 @@ router.get('/categories/:categoryId', getACategory);
 
 // only admin routes
 router.post('/category', createCategory);
-router.put('/category/:categoryId', updateCategory);
+router.put('/categories/:categoryId', updateCategory);
 router.delete('/category/:categoryId', deleteCategory);
 
 

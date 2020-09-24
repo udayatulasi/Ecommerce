@@ -1,17 +1,33 @@
 const Category = require('../models/categories');
 
 // Get a category by Id
-exports.getCategoryById = (req, res, next, id) => {
+exports.getCategoryById = async(req, res, next, id) => {
+ 
+    try {
+      
+        const category = await Category.findById(id)
+       
+        if(!category) {
+            return res.status(400).json({ success: false, data:'cannot get category'})
+        }
 
-  
+        req.category = category
+        next();
+
+    }
+    
+    catch(err) {
+        return res.status(400).json({ success: false, data:'cannot get category'})
+    }
+
 
 }
 
 
 // Get a category
 
-exports.getACategory = () => {
-
+exports.getACategory = (req, res) => {
+        return res.status(200).json({ success: true, data: req.category})
 }
 
 
@@ -52,7 +68,7 @@ exports.createCategory = async( req, res) => {
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: 'Category creation failed'})
+        return res.status(400).json({success : false,data: err})
        
     }
     
@@ -61,9 +77,13 @@ exports.createCategory = async( req, res) => {
 
 // Update category
 exports.updateCategory = async( req, res) => {
-
+    
     try {
-        const category = await Category.findByIdAndUpdate(req.params.id, req.body)
+        
+        const category = await Category.findByIdAndUpdate(req.params.categoryId, {$push : req.body},{
+            new : true,
+            useFindAndModify : false
+        })
         if(!category) {
             return res.status(400).json({success : false,data: 'Category updation failed'
             })
@@ -74,7 +94,7 @@ exports.updateCategory = async( req, res) => {
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: 'Category updation failed'})
+        return res.status(400).json({success : false,data: err})
        
     }
 
@@ -85,7 +105,7 @@ exports.updateCategory = async( req, res) => {
 exports.deleteCategory = async( req, res) =>{
 
     try {
-        const category = await Category.findByIdAndDelete(req.params.id)
+        const category = await Category.findByIdAndDelete(req.params.categoryId)
         if(!category) {
             return res.status(400).json({success : false,data: 'Category deletion failed'})
 
