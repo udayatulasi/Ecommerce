@@ -66,9 +66,8 @@ exports.createDepartment = async( req, res) => {
 exports.updateDepartment = async( req, res) => {
 
     try {
-        console.log(req.params.departmentId,req.body)
+
         const department = await Departments.findByIdAndUpdate(req.params.departmentId,{$set:req.body},{useFindAndModify:false} )
-        console.log(department)
         if(!department) {
             return res.status(400).json({success : false,data: 'Department1 updation failed'
             })
@@ -88,15 +87,15 @@ exports.updateDepartment = async( req, res) => {
 // Delete product
 exports.deleteDepartment = async( req, res) =>{
     try {
+        if(req.department.categories.length >0){
+            return res.status(300).json({success : false,data: 'Delete Categories related to this department'})
+            
+        }
         const department = await Departments.findByIdAndDelete(req.params.deparmentId)
         if(!department) {
             return res.status(400).json({success : false,data: 'Department deletion failed'})
-
         }
-        if(department.categories.length >0){
-            return res.status(400).json({success : false,data: 'Delete Categories related to this department to delete this department'})
-            
-        }
+        
 
        return res.status(200).json({ success: true, data:department})
 

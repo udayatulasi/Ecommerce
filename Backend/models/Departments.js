@@ -3,7 +3,7 @@ const{ObjectId} = mongoose.Schema;
 
 
 const CategoryIdSchema = new mongoose.Schema({
-    category:{
+    category_id:{
         type:ObjectId,
         ref:"Categories"
         }
