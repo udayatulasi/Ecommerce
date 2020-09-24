@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 
-// const departmentSchema = new mongoose.Schema({
-//     department : {
-//         type : mongoose.Schema.Types.ObjectId,
-//         ref  : Departments
-//     }
-// })
+const productsSchema = new mongoose.Schema({
+    product_id : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref  : "Products"
+    }
+})
 
 // const productSchema = 
 
@@ -19,12 +19,14 @@ const categoriesSchema = new mongoose.Schema({
         trim : true
     },
 
-    // department:[departmentSchema],
-
-    products : {
+    department:{
         type : mongoose.Schema.Types.ObjectId,
-        ref  : "Product"
+        ref  : "Department",
+       
     },
+
+    
+    products : [ productsSchema],
     
     image : {
         data : Buffer,

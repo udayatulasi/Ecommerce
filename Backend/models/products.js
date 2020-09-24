@@ -21,7 +21,7 @@ const productsSchema = new mongoose.Schema({
         maxlength : 32,
         default : 'S',
         enum : ["XXL","XL","L","M","S"],
-       required : true
+        required : true
     },
 
     category : {

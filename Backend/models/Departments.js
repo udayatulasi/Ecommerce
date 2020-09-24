@@ -7,7 +7,6 @@ const CategoryIdSchema = new mongoose.Schema({
         type:ObjectId,
         ref:"Categories"
         }
-
 })
 
 const Category=mongoose.model("Category",CategoryIdSchema)

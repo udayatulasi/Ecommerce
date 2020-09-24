@@ -1,5 +1,5 @@
 const Category = require('../models/categories');
-
+const Depatments = require('../models/Departments')
 // Get a category by Id
 exports.getCategoryById = async(req, res, next, id) => {
  
@@ -43,6 +43,7 @@ exports.getAllCategories = async( req, res) => {
             })
 
         }
+        
         res.status(200).json({ success: true, data:category})
 
     }
@@ -64,6 +65,13 @@ exports.createCategory = async( req, res) => {
             return res.status(400).json({success : false,data: 'Category creation failed'
             })
         }
+    
+        let category = {  category_id : category._id }
+        const department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$push: {categories : category }}, {new: true, useFindAndModify:false})
+        if(!department){
+            return res.status(400).json({success : false,data: 'unable to add category to department'})
+        }
+
         res.status(200).json({ success: true, data:category})
     }
 
@@ -105,12 +113,23 @@ exports.updateCategory = async( req, res) => {
 exports.deleteCategory = async( req, res) =>{
 
     try {
+
+        if(req.category.products.length > 0 ){
+            return res.status(400).json({success : false,data: 'Delete all products before deleting category'})
+
+        }
         const category = await Category.findByIdAndDelete(req.params.categoryId)
         if(!category) {
             return res.status(400).json({success : false,data: 'Category deletion failed'})
-
         }
 
+        let index = req.department.categories.findIndex(category => req.params.categoryId === category.category_id);
+        req.department.categories.splice(index, 1)
+        let department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$set:req.department}, {new:true, useFindAndModify: false})
+        if(!department){
+            return res.status(400).json({success : false,data: 'category deletion failed  in department'})
+
+        }
         res.status(200).json({ success: true, data:category})
 
     }
