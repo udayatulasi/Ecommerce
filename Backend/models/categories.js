@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+
+// const departmentSchema = new mongoose.Schema({
+//     department : {
+//         type : mongoose.Schema.Types.ObjectId,
+//         ref  : Departments
+//     }
+// })
+
+// const productSchema = 
+
 const categoriesSchema = new mongoose.Schema({
     name : {
         type: String,
@@ -9,19 +19,21 @@ const categoriesSchema = new mongoose.Schema({
         trim : true
     },
 
+    // department:[departmentSchema],
+
     products : {
         type : mongoose.Schema.Types.ObjectId,
-        ref  : Products
+        ref  : "Product"
     },
-
+    
     image : {
         data : Buffer,
         contentType : String,
-        required : true
+        
     }
 },
 {
     timestamps : true
 })
 
-module.exports = mongoose.model("Categories", categoriesSchema)
+module.exports = mongoose.model("Category", categoriesSchema)

@@ -8,11 +8,12 @@ const OrderItemsSchema = new mongoose.Schema({
     },
     name: String,
     count:Number,
-    price:Number
+    price:Number,
+
 })
 
 
-module.exports = mongoose.model("Cart",OrderItemsSchema)
+const Cart = mongoose.model("Cart",OrderItemsSchema)
 
 
 
