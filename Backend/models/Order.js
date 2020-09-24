@@ -12,7 +12,7 @@ const OrderItemsSchema = new mongoose.Schema({
 })
 
 
-const Cart = mongoose.model("Cart",OrderItemsSchema)
+module.exports = mongoose.model("Cart",OrderItemsSchema)
 
 
 
@@ -41,7 +41,4 @@ const OrderSchema = new mongoose.Schema({
     },
 },{timestamps:true});
 
-const Order = mongoose.model("Order",OrderSchema)
-
-
-module.exports = {Order,Cart}
+module.exports = mongoose.model("Order",OrderSchema)

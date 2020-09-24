@@ -63,7 +63,7 @@ exports.createOrder = async( req, res) => {
 // Update product
 exports.updateOrder = async( req, res) => {
     try {
-        const order = await Order.findByIdAndUpdate(req.params.id, {$set:req.body})
+        const order = await Order.findByIdAndUpdate(req.params.id, {$set:req.body},{useFindAndModify:false})
         if(!order) {
             return res.status(400).json({success : false,data: 'Order updation failed'
             })

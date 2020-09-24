@@ -46,7 +46,7 @@ exports.createDepartment = async( req, res) => {
     try {
         const department = await Departments.create(req.body)
         if(!department) {
-            return res.status(400).json({success : false,data: 'Department creation failed'})
+            return res.status(400).json({success : false,data: 'Department1 creation failed'})
 
         }
         return res.status(200).json({ success: true, data: department})
@@ -54,6 +54,7 @@ exports.createDepartment = async( req, res) => {
     }
 
     catch( err){
+        console.log(err)
         return res.status(400).json({success : false,data: 'Department creation failed'})
        
     }
@@ -65,15 +66,18 @@ exports.createDepartment = async( req, res) => {
 exports.updateDepartment = async( req, res) => {
 
     try {
-        const department = await Product.findByIdAndUpdate(req.params.id,{$set:req.body} )
+        console.log(req.params.departmentId,req.body)
+        const department = await Departments.findByIdAndUpdate(req.params.departmentId,{$set:req.body},{useFindAndModify:false} )
+        console.log(department)
         if(!department) {
-            return res.status(400).json({success : false,data: 'Department updation failed'
+            return res.status(400).json({success : false,data: 'Department1 updation failed'
             })
 
         }
       return res.status(200).json({ success: true, data:department})
     }
     catch( err){
+        console.log(err)
         return res.status(400).json({success : false,data: 'Department updation failed'})
        
     }
@@ -84,7 +88,7 @@ exports.updateDepartment = async( req, res) => {
 // Delete product
 exports.deleteDepartment = async( req, res) =>{
     try {
-        const department = await Departments.findByIdAndDelete(req.params.id)
+        const department = await Departments.findByIdAndDelete(req.params.deparmentId)
         if(!department) {
             return res.status(400).json({success : false,data: 'Department deletion failed'})
 
@@ -99,7 +103,8 @@ exports.deleteDepartment = async( req, res) =>{
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: 'Product deletion failed'})
+        console.log(err)
+        return res.status(400).json({success : false,data: 'department deletion failed'})
        
     }
 }

@@ -1,11 +1,11 @@
 var express = require("express")
 var router = express.Router()
-const { check,validationResult } = require('express-validator');
-const {isAuth,isAdmin,isSignedIn}= require("../../controllers/auth/auth"); 
+// const { check,validationResult } = require('express-validator');
+// const {isAuth,isAdmin,isSignedIn}= require("../../controllers/auth/auth"); 
 const { createOrder,getAllOrders,getAOrder,changeOrderstatus,deleteOrder } = require("../controllers/order");
 
 
-router.post("/order/create/:userid",isSignedIn,iSAuth,createOrder)
+router.post("/order/create/:userid",createOrder)
 
 
 
@@ -14,7 +14,8 @@ router.post("/order/create/:userid",isSignedIn,iSAuth,createOrder)
 
 
 
-router.put("/orders/:orderid/:userid",isSignedIn,isAuth,isAdmin,changeOrderstatus)
+router.put("/orders/:orderid/:userid",changeOrderstatus)
 
-router.delete("/orders/:orderid/:userid",isSignedIn,isAuth,isAdmin,deleteOrder)
+router.delete("/orders/:orderid/:userid",deleteOrder)
 
+module.exports = router

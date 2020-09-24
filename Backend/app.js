@@ -7,7 +7,9 @@ const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
 
-// const orderRoutes = require("./routes/order")
+const orderRoutes = require("./routes/order")
+const departmentRoutes = require("./routes/department")
+
 
 
 
@@ -25,11 +27,9 @@ app.use(cors());
 
 // routes
 
-app.use("/ecommerce",authRoutes)
+// app.use("/ecommerce",authRoutes)
 app.use("/ecommerce",orderRoutes)
-
-
-
+app.use("/ecommerce",departmentRoutes)
 
 
 // port
