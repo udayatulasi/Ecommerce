@@ -73,7 +73,7 @@ exports.signout = async (req, res) => {
 exports.isSignedIn = expressJwt({
     secret: "ecommerce",
     userProperty: "auth",
-    algorithms: ['HS256']
+    // algorithms: ['HS256']
 })
 
 // middlewares
