@@ -1,9 +1,9 @@
 const express = require("express")
 const router = express.Router()
 
-const { getUserId, getUser, updateUser, userOrder, userOrderList, deleteUser} = require("../conrollers/user")
+const { getUserId, getUser, updateUser, userOrder, userOrderList, deleteUser} = require("../controllers/user")
 
-const { isSignedIn, isAuth } = require("../conrollers/auth")
+const { isSignedIn, isAuth } = require("../controllers/auth")
 
 
 // params

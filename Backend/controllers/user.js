@@ -34,13 +34,16 @@ exports.getUser = async(req, res) => {
 exports.updateUser = async(req, res) => {
    
     try {
-        let user = await User.findByIdAndUpdate(req.user._id, req.body)
+        let user = await User.findByIdAndUpdate(req.params.userId, {$set: req.body}, {
+            new: true,
+            useFindAndModify: false
+        })
         if(!user) {
             return res.status(400).json({success: false, data: "unable to get user"})
         }
         req.user.salt = undefined;
         req.user.encry_password = undefined;
-        res.status(200).json({success: true, data: req.user})
+        res.status(200).json({success: true, data: user})
     }
     catch (err){
         return res.status(400).json({success: false, data: "unable to get user"})
@@ -78,7 +81,7 @@ exports.userOrder = async(req, res) => {
 exports.deleteUser = async(req, res) => {
    
     try {
-        const user = await User.findByIdAndDelete(req.user._id)
+        const user = await User.findByIdAndDelete(req.params.userId)
         if(!order) {
             return res.status(400).json({success: false, data: "unable to get"})
         }
