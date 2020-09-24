@@ -14,6 +14,25 @@ exports.getUserId = async(req, res, next, id)  => {
        return res.status(400).json({success: false, data: "unable to get user"})
     }
 }
+exports.getAorderbyId = async(req, res,next) => {
+    // should get get orderById param
+     try {
+         const order = await Order.findById(req.params.orderId)
+         if(!order) {
+             return res.status(400).json({success: false, data: "unable to get order"})
+         }
+         req.order = order
+         next()
+     }
+     catch (err){
+         return res.status(400).json({success: false, data: "unable to get order"})
+      }
+     
+ }
+
+ exports.userOrder =(req,res)=>{
+     res.status(200).json({success:true,data:req.order})
+ }
 
 exports.getUser = async(req, res) => {
  // should make some of fields as undefined
@@ -53,7 +72,7 @@ exports.updateUser = async(req, res) => {
 exports.userOrderList = async(req, res) => {
    
     try {
-        const order = await Order.find()
+        const order = await Order.find({user:req.params.userId})
         if(!order) {
             return res.status(400).json({success: false, data: "unable to get user"})
         }
@@ -64,19 +83,7 @@ exports.userOrderList = async(req, res) => {
      }
 }
 
-exports.userOrder = async(req, res) => {
-   // should get get orderById param
-    try {
-        const order = await Order.findById()
-        if(!order) {
-            return res.status(400).json({success: false, data: "unable to get order"})
-        }
-        res.status(200).json({success: true, data: order})
-    }
-    catch (err){
-        return res.status(400).json({success: false, data: "unable to get order"})
-     }
-}
+
 
 exports.deleteUser = async(req, res) => {
    
