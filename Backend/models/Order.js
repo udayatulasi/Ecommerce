@@ -13,7 +13,7 @@ const OrderItemsSchema = new mongoose.Schema({
 })
 
 
-const Cart = mongoose.model("Cart",OrderItemsSchema)
+module.exports = mongoose.model("Cart",OrderItemsSchema)
 
 
 
