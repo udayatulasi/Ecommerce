@@ -9,11 +9,6 @@ const OrderItemsSchema = new mongoose.Schema({
     name: String,
     count:Number,
     price:Number,
-    status:{
-        type:String,
-        default:"Received",
-        enum:["Cancelled","Delivered","Shipped","Processing","Received","PaymentRequired"]
-    },
 
 })
 
@@ -23,7 +18,7 @@ const Cart = mongoose.model("Cart",OrderItemsSchema)
 
 
 const OrderSchema = new mongoose.Schema({
-    orders:[OrderItemsSchema],
+    products:[OrderItemsSchema],
     transaction_Deatils:{},
     total_amount:{type:Number},
     address: {
@@ -39,11 +34,12 @@ const OrderSchema = new mongoose.Schema({
         min:6,
         max:6,
         required:true,
-    }
-
+    },
+    status:{
+        type:String,
+        default:"Recieved",
+        enum:["Cancelled","Delivered","Shipped","Processing","Recieved","PaymentRequired"]
+    },
 },{timestamps:true});
 
-const Order = mongoose.model("Order",OrderSchema)
-
-
-module.exports = {Order,Cart}
+module.exports = mongoose.model("Order",OrderSchema)

@@ -7,7 +7,9 @@ const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
 
-// const orderRoutes = require("./routes/order")
+const orderRoutes = require("./routes/order")
+const departmentRoutes = require("./routes/department")
+
 
 
 

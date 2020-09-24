@@ -1,21 +1,23 @@
 var express = require("express")
 var router = express.Router()
 const { check,validationResult } = require('express-validator');
-const {isAdmin,isAuth,isSignedIn}= require("../../controllers/auth/auth"); 
+// const {isAdmin,isAuth,isSignedIn}= require("../../controllers/auth/auth"); 
+const { updateDepartment,deleteDepartment,createDepartment,getAllDepartments } = require("../controllers/department");
 
 
-router.post("/department/:userid",isSignedIn,isAuth,isAdmin,createDepartment)
-router.post("/department/createCategory/:userid",isSignedIn,isAuth,isAdmin,createCategory)
+router.post("/department",createDepartment)
+// router.post("/department/createCategory/:userid",createCategory)
 
 
-router.get("/departments",getAllDepartment)
-router.get("/department/:department",getAllCategories)
+router.get("/department",getAllDepartments)
+// router.get("/department/:department",getAllCategories)
 
+router.put("/department/:departmentId",updateDepartment)
 
+router.delete("/department/:deparmentId",deleteDepartment)
+// router.delete("/department/:categoryId",deleteCategory)
 
-router.delete("/department/:userid",isSignedIn,isAuth,isAdmin,deleteDepartment)
-router.delete("/department/:categoryId",isSignedIn,isAuth,isAdmin,deleteCategory)
-
+module.exports = router
 
 
 
