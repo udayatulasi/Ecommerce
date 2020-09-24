@@ -1,5 +1,7 @@
+const Order = require('../models/Order')
 const Category = require('../models/categories');
-const Depatments = require('../models/Departments')
+
+const Departments = require('../models/Departments')
 // Get a category by Id
 exports.getCategoryById = async(req, res, next, id) => {
  
@@ -66,8 +68,8 @@ exports.createCategory = async( req, res) => {
             })
         }
     
-        let category = {  category_id : category._id }
-        const department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$push: {categories : category }}, {new: true, useFindAndModify:false})
+        let category_id = {  category_id : category._id }
+        const department = await Departments.findByIdAndUpdate(req.params.departmentId, {$push: {categories : category_id }}, {new: true, useFindAndModify:false})
         if(!department){
             return res.status(400).json({success : false,data: 'unable to add category to department'})
         }
@@ -125,7 +127,7 @@ exports.deleteCategory = async( req, res) =>{
 
         let index = req.department.categories.findIndex(category => req.params.categoryId === category.category_id);
         req.department.categories.splice(index, 1)
-        let department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$set:req.department}, {new:true, useFindAndModify: false})
+        let department = await Departments.findByIdAndUpdate(req.params.departmentId, {$set:req.department}, {new:true, useFindAndModify: false})
         if(!department){
             return res.status(400).json({success : false,data: 'category deletion failed  in department'})
 
