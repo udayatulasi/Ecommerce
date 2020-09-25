@@ -1,14 +1,7 @@
 const mongoose = require('mongoose');
 
 
-// const departmentSchema = new mongoose.Schema({
-//     department : {
-//         type : mongoose.Schema.Types.ObjectId,
-//         ref  : Departments
-//     }
-// })
 
-// const productSchema = 
 
 const categoriesSchema = new mongoose.Schema({
     name : {
@@ -19,11 +12,10 @@ const categoriesSchema = new mongoose.Schema({
         trim : true
     },
 
-    // department:[departmentSchema],
-
-    products : {
+    department:{
         type : mongoose.Schema.Types.ObjectId,
-        ref  : "Product"
+        ref  : "Department",
+       
     },
     
     image : {

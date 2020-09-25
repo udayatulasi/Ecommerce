@@ -6,11 +6,18 @@ const cookieParser = require("cookie-parser");
 const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
-
+const authRoutes = require("./routes/auth")
 const orderRoutes = require("./routes/order")
 const departmentRoutes = require("./routes/department")
+<<<<<<< HEAD
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/user")
+=======
+const categoryRoutes = require("./routes/categories")
+const productRoutes = require("./routes/products")
+const userRoutes = require("./routes/user")
+
+
 
 
 
@@ -32,6 +39,13 @@ app.use(cors());
 app.use("/ecommerce",authRoutes)
 app.use("/ecommerce", userRoutes)
 app.use("/ecommerce",orderRoutes)
+app.use("/ecommerce",departmentRoutes)
+app.use("/ecommerce",categoryRoutes)
+app.use("/ecommerce",productRoutes)
+app.use("/ecommerce",userRoutes)
+
+
+
 
 
 

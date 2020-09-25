@@ -1,5 +1,5 @@
 const Product = require('../models/products')
-
+const Category = require('../models/categories')
 // Get a product by Id
 exports.getProductById = async( req, res,next,id) => {
     try {
@@ -60,6 +60,12 @@ exports.createProduct = async( req, res) => {
             return res.status(400).json({success : false,data: 'Product creation failed'})
 
         }
+        let products = {  product_id : product._id }
+        const category = await Category.findByIdAndUpdate(req.params.categoryId, {$push: {products : products }}, {new: true, useFindAndModify:false})
+        if(!category){
+            return res.status(400).json({success : false,data: 'unable to add products to category'})
+        }
+
         res.status(200).json({ success: true, data: product})
 
     }
@@ -104,7 +110,14 @@ exports.deleteProduct = async( req, res) =>{
             return res.status(400).json({success : false,data: 'Product deletion failed'})
 
         }
+        
+        let index = req.category.products.findIndex(product => req.params.productId === product.product_id);
+        req.department.categories.splice(index, 1)
+        let department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$set:req.department}, {new:true, useFindAndModify: false})
+        if(!department){
+            return res.status(400).json({success : false,data: 'category deletion failed  in department'})
 
+        }
         res.status(200).json({ success: true, data:product})
 
     }

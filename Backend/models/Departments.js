@@ -1,16 +1,4 @@
 const mongoose = require("mongoose")
-const{ObjectId} = mongoose.Schema;
-
-
-const CategoryIdSchema = new mongoose.Schema({
-    category:{
-        type:ObjectId,
-        ref:"Categories"
-        }
-
-})
-
-const Category=mongoose.model("Category",CategoryIdSchema)
 
 
 const DepartmentsSchema = new mongoose.Schema({
@@ -21,7 +9,6 @@ const DepartmentsSchema = new mongoose.Schema({
         maxlength:32,
         unique:true
     },
-    categories: [CategoryIdSchema],
     photo:{
         data: Buffer,
         contentType: String
@@ -35,4 +22,3 @@ const DepartmentsSchema = new mongoose.Schema({
 
 module.exports=mongoose.model("Departments",DepartmentsSchema)
 
-// module.exports = {Departments,Category}

@@ -1,12 +1,13 @@
 const express = require("express")
 const router = express.Router()
 
-const { getUserId, getUser, updateUser, userOrder, userOrderList, deleteUser} = require("../controllers/user")
+const { getUserId, getUser, updateUser, userOrder, userOrderList, deleteUser, getAorderbyId} = require("../controllers/user")
 
 const { isSignedIn, isAuth } = require("../controllers/auth")
 
 
 // params
+router.param("orderId",getAorderbyId)
 router.param("userId", getUserId)
 
 // user routes
