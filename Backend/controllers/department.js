@@ -1,4 +1,5 @@
 const Departments = require('../models/Departments')
+const Category = require("../models/categories")
 
 // Get a product by Id
 exports.getDepartmentById = async (req,res,next,id) => {
@@ -87,21 +88,19 @@ exports.updateDepartment = async( req, res) => {
 // Delete product
 exports.deleteDepartment = async( req, res) =>{
     try {
-        if(req.department.categories.length >0){
-            return res.status(300).json({success : false,data: 'Delete Categories related to this department'})
-            
+        let categories = await Category.find({department:req.params.departmentId})
+        if(categories){
+           return res.status(200).json({ success: false, data:"Delete Categories related to this department"})
         }
+
         const department = await Departments.findByIdAndDelete(req.params.deparmentId)
         if(!department) {
-            return res.status(400).json({success : false,data: 'Department deletion failed'})
-        }
-        
-
-       return res.status(200).json({ success: true, data:department})
-
+                return res.status(400).json({success : false,data: 'Department not avaliable'})
+            }
+                return res.status(200).json({ success: true, data:department})
     }
 
-    catch( err){
+    catch(err){
         console.log(err)
         return res.status(400).json({success : false,data: 'department deletion failed'})
        
