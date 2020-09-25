@@ -11,8 +11,7 @@ const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/user")
 const categoryRoutes = require("./routes/categories")
 const productRoutes = require("./routes/products")
-const userRoutes = require("./routes/user")
-
+const orderRoutes = require("./routes/order")
 // DB connect
 dotenv.config({path:'./config/db.env'});
 DBconnection();
