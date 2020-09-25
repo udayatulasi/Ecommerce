@@ -9,6 +9,8 @@ const cors = require("cors");
 
 const orderRoutes = require("./routes/order")
 const departmentRoutes = require("./routes/department")
+const authRoutes = require("./routes/auth")
+const userRoutes = require("./routes/user")
 
 
 
@@ -28,7 +30,9 @@ app.use(cors());
 // routes
 
 app.use("/ecommerce",authRoutes)
+app.use("/ecommerce", userRoutes)
 app.use("/ecommerce",orderRoutes)
+
 
 
 

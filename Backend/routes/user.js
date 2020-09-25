@@ -12,7 +12,7 @@ router.param("userId", getUserId)
 // user routes
 router.get("/user/:userId", isSignedIn, isAuth, getUser)
 router.put("/user/:userId", isSignedIn, isAuth, updateUser)
-router.get("/orders/:userId", isSignedIn, isAuth, userOrder)
+router.get("/orders/:userId/:orderId", isSignedIn, isAuth, userOrder)
 router.get("/orders/:userId", isSignedIn, isAuth, userOrderList)
 router.delete("/user/:userId", isSignedIn, isAuth, deleteUser)
 

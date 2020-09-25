@@ -13,7 +13,6 @@ exports.signup = async(req, res) => {
         if(!errors.isEmpty()){
             return res.status(404).json({success: false, data:  errors.array()[0].msg})
         }
-        console.log(req.body)
         const user = await User.create(req.body)
         if(!user) {
             return res.status(400).json({success: false, data: "unable to signup"})
@@ -42,14 +41,15 @@ exports.signin = async(req, res) => {
             return res.status(400).json({success: false, data: "password does not match"})
         }
         // create token
-        const token = await jwt.sign({id: user._id}, process.env.SECRET);
+        const token = await jwt.sign({id: user._id,role: user.role}, "ecommerce", {expiresIn : 60 });
 
         // keeping token in cookie
-         await res.cookie("token", token, {expire: 30*60*100})
+         await res.cookie("token", token)
 
         const { _id, name, email, role } = user
         res.json({token, user: {_id, name, email, role }})
         
+
     }
     catch (err){
         console.log(err)
@@ -70,16 +70,34 @@ exports.signout = async (req, res) => {
 
 }
 
-exports.isSignedIn = expressJwt({
-    secret: "ecommerce",
-    userProperty: "auth",
-    // algorithms: ['HS256']
-})
+exports.isSignedIn = async(req,res,next)=>{
+
+try{
+    let token = req.get("Authorization").split(" ")[1]
+   req.auth =  jwt.verify(token,"ecommerce")
+}
+catch(err){
+    return res.status(400).json({success: false, data: "unable to authenticate"})
+}
+next()}
+
+//token verification
+// const tokauth = async(req, res) => {
+//     let checker = req.profile && req.auth && req.profile._id == req.auth._id;
+//     if (!checker) {
+//         return res.status(403).json({
+//             error: "ACCESS DENIED"
+//         });
+//     }
+//     next();
+// }
+
 
 // middlewares
 exports.isAuth = async(req, res, next) => {
     
    try {
+       console.log(req.auth)
     let auth = await req.user && req.auth && req.user._id == req.auth.id
 
     if(!auth) {
