@@ -1,8 +1,8 @@
 var express = require("express")
-var router = express.Router()
+var     router = express.Router()
 const { check,validationResult } = require('express-validator');
 const {isAuth,isSignedIn}= require("../controllers/auth"); 
-const { updateDepartment,deleteDepartment,createDepartment,getAllDepartments, getDepartmentById } = require("../controllers/department");
+const { updateDepartment,deleteDepartment,createDepartment,getAllDepartments, getDepartmentById, getADepartment} = require("../controllers/department");
 
 router.param('departmentId',getDepartmentById)
 
@@ -12,6 +12,9 @@ router.post("/department",isSignedIn,isAuth,createDepartment)
 
 router.get("/departments",getAllDepartments)
 // router.get("/department/:department",getAllCategories)
+
+// TODO...............................................getDepatmentById getADepartment
+router.get("/departments/:departmentId", getADepartment)
 
 router.put("/department/:departmentId",isSignedIn,isAuth,updateDepartment)
 

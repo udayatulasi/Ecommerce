@@ -5,7 +5,7 @@ const expressJwt = require("express-jwt")
 const { check, validationResult } = require("express-validator")
 
 
-exports.signup = async(req, res) => {
+exports.signup = async(req, res, next) => {
   
     try {
         const errors = validationResult(req)
@@ -30,6 +30,7 @@ exports.signup = async(req, res) => {
         // return res.status(400).json({success: false, data: err})
         if(!err.statusCode) {
             err.statusCode = 500;
+            err.message = "email already registered"
         }
         next(err);
      }
@@ -60,7 +61,7 @@ exports.signin = async(req, res) => {
             throw error
         }
         // create token
-        const token = await jwt.sign({id: user._id,role: user.role}, "ecommerce", {expiresIn : 60 * 60});
+        const token = await jwt.sign({id: user._id,role: user.role}, "ecommerce", {expiresIn : 60* 60});
 
         // keeping token in cookie
          await res.cookie("token", token)
@@ -71,7 +72,7 @@ exports.signin = async(req, res) => {
 
     }
     catch (err){
-        console.log(err)
+       
         // return res.status(400).json({success: false, data: err})
         if(!err.statusCode) {
             err.statusCode = 500;
@@ -98,46 +99,42 @@ exports.signout = async (req, res) => {
 
 }
 
-exports.isSignedIn = async(req,res,next)=>{
 
-try{
-    let token = req.get("Authorization").split(" ")[1]
-   req.auth =  jwt.verify(token,"ecommerce")
-}
-catch(err){
-    // return res.status(400).json({success: false, data: "unable to authenticate"})
-    if(!err.statusCode) {
-        err.statusCode = 500;
+exports.isSignedIn = (req,res,next)=>{
+
+    const authHeader = req.get('Authorization');
+    if (!authHeader) {
+      const error = new Error('Not authenticated...');
+      error.statusCode = 401;
+      throw error;
     }
-    next(err);
-}
+    const token = authHeader.split(' ')[1];
+    let decodedToken;
+    try {
+      decodedToken = jwt.verify(token, process.env.SECRET);
+    } catch (err) {
+      err.statusCode = 500;
+      throw err;
+    }
+    if (!decodedToken) {
+      const error = new Error('Not authenticated.');
+      error.statusCode = 401;
+      throw error;
+    }
+    req.auth = decodedToken;
 next()
 }
 
-//token verification
-// const tokauth = async(req, res) => {
-//     let checker = req.profile && req.auth && req.profile._id == req.auth._id;
-//     if (!checker) {
-//         return res.status(403).json({
-//             error: "ACCESS DENIED"
-//         });
-//     }
-//     next();
-// }
-
-
 // middlewares
 exports.isAuth = async(req, res, next) => {
-       if(req.auth.role === 1){
-           next()
-       }
+       if(req.auth.role !== 1){
     let auth =  req.user && req.auth && req.user._id == req.auth.id 
     if(!auth) {
         // return res.status(400).json({success: false, data: "Access Denied"})
         const error = new Error("Access denied please signin")
         error.statusCode = 400;
         throw error
-    }
+    }}
     next()
   
 }
