@@ -34,6 +34,14 @@ app.use("/ecommerce",categoryRoutes)
 app.use("/ecommerce",productRoutes)
 app.use("/ecommerce",userRoutes)
 
+app.use((error, req, res, next) => {
+    console.log(error);
+    const status = error.statuscode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({success: false, message: message, data: data});
+});
+
 
 
 

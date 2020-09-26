@@ -12,7 +12,7 @@ const {
 } = require("../controllers/products");
 
 // Importing auth controller
-const { isAdmin, isSignedIn, isAuth} = require('../controllers/auth')
+const {  isSignedIn, isAuth} = require('../controllers/auth')
 
 const { getCategoryById} = require('../controllers/categories')
 
@@ -27,9 +27,9 @@ router.get('/products', getAllProducts);
 router.get('/product/:productId', getAProduct);
 
 // only admin routes
-router.post('/product/:categoryId', isSignedIn, isAuth, isAdmin, createProduct);
-router.put('/product/:categoryId:productId', isSignedIn, isAuth, isAdmin, updateProduct);
-router.delete('/product/:categoryId/:productId', isSignedIn, isAuth, isAdmin, deleteProduct);
+router.post('/product/:categoryId', isSignedIn, isAuth, createProduct);
+router.put('/product/:categoryId:productId', isSignedIn, isAuth, updateProduct);
+router.delete('/product/:categoryId/:productId', isSignedIn, isAuth, deleteProduct);
 
 
 module.exports = router

@@ -12,7 +12,7 @@ const {
 } = require("../controllers/categories");
 
 // Importing auth controller
-const { isAdmin, isSignedIn, isAuth} = require('../controllers/auth')
+const {  isSignedIn, isAuth} = require('../controllers/auth')
 
 const { getDepartmentById} = require('../controllers/department')
 
@@ -24,9 +24,9 @@ router.get('/categories', getAllCategories);
 router.get('/category/:categoryId', getACategory);
 
 // only admin routes
-router.post('/category/:departmentId', isSignedIn, isAuth, isAdmin,createCategory);
-router.put('/category/:departmentId/:categoryId', isSignedIn, isAuth, isAdmin, updateCategory);
-router.delete('/category/:departmentId/:categoryId', isSignedIn, isAuth, isAdmin,deleteCategory);
+router.post('/category/:departmentId', isSignedIn, isAuth,createCategory);
+router.put('/category/:departmentId/:categoryId', isSignedIn, isAuth, updateCategory);
+router.delete('/category/:departmentId/:categoryId', isSignedIn, isAuth,deleteCategory);
 
 
 module.exports = router
