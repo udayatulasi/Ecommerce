@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     image: {
-        type: String,
+        type: Buffer,
+        contentType: String
     },
     salt: String,
     phone: {
