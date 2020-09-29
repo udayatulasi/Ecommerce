@@ -1,14 +1,17 @@
 const Category = require('../models/categories');
-const Depatments = require('../models/Departments')
+const Product = require("../models/products")
 // Get a category by Id
-exports.getCategoryById = async(req, res, next, id) => {
+exports.getCategoryById = async(req, res, next) => {
  
     try {
       
-        const category = await Category.findById(id)
+        const category = await Category.findById(req.params.categoryId).populate('department')
        
         if(!category) {
-            return res.status(400).json({ success: false, data:'cannot get category'})
+            // return res.status(400).json({ success: false, data:'cannot get category'})
+            const error = new Error('cannot get category')
+            error.statusCode = 400;
+            throw error
         }
 
         req.category = category
@@ -17,7 +20,11 @@ exports.getCategoryById = async(req, res, next, id) => {
     }
     
     catch(err) {
-        return res.status(400).json({ success: false, data:'cannot get category'})
+        // return res.status(400).json({ success: false, data:'cannot get category'})
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
     }
 
 
@@ -27,6 +34,7 @@ exports.getCategoryById = async(req, res, next, id) => {
 // Get a category
 
 exports.getACategory = (req, res) => {
+    
         return res.status(200).json({ success: true, data: req.category})
 }
 
@@ -34,49 +42,77 @@ exports.getACategory = (req, res) => {
 
 
 // Get all categories
-exports.getAllCategories = async( req, res) => {
+exports.getAllCategories = async( req, res,next) => {
 
     try {
-        const category = await Category.find()
+        const category = await Category.find().populate("department")
         if(!category) {
-            return res.status(400).json({success : false,data: 'Unable to get all categories'
-            })
-
+            // return res.status(400).json({success : false,data: 'Unable to get all categories'})
+            const error = new Error('Unable to get all categories')
+            error.statusCode = 400;
+            throw error
         }
         
-        res.status(200).json({ success: true, data:category})
+        return res.status(200).json({ success: true, data:category})
 
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: 'Unable to get all categories'})
-       
+        // return res.status(400).json({success : false,data: 'Unable to get all categories'})
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);  
+    }
+
+}
+
+exports.getAllDepartmentCategories = async( req, res,next) => {
+
+    try {
+        const category = await Category.find(req.params.departmentId)
+        if(!category) {
+            // return res.status(400).json({success : false,data: 'Unable to get all categories'})
+            const error = new Error('Unable to get all categories')
+            error.statusCode = 400;
+            throw error
+        }
+        
+        return res.status(200).json({ success: true, data:category})
+
+    }
+
+    catch( err){
+        // return res.status(400).json({success : false,data: 'Unable to get all categories'})
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);  
     }
 
 }
 
 
 // Create categories
-exports.createCategory = async( req, res) => {
+exports.createCategory = async( req, res,next) => {
 
     try {
         const category = await Category.create(req.body)
         if(!category) {
-            return res.status(400).json({success : false,data: 'Category creation failed'
-            })
+            // return res.status(400).json({success : false,data: 'Category creation failed'})
+            const error = new Error('Category creation failed')
+            error.statusCode = 400;
+            throw error
         }
-    
-        let category = {  category_id : category._id }
-        const department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$push: {categories : category }}, {new: true, useFindAndModify:false})
-        if(!department){
-            return res.status(400).json({success : false,data: 'unable to add category to department'})
-        }
-
-        res.status(200).json({ success: true, data:category})
+        return res.status(200).json({ success: true, data:category})
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: err})
+        // return res.status(400).json({success : false,data: err})
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
        
     }
     
@@ -84,7 +120,7 @@ exports.createCategory = async( req, res) => {
 
 
 // Update category
-exports.updateCategory = async( req, res) => {
+exports.updateCategory = async( req, res,next) => {
     
     try {
         
@@ -93,16 +129,22 @@ exports.updateCategory = async( req, res) => {
             useFindAndModify : false
         })
         if(!category) {
-            return res.status(400).json({success : false,data: 'Category updation failed'
-            })
+            // return res.status(400).json({success : false,data: 'Category updation failed'})
+            const error = new Error('Category updation failed')
+            error.statusCode = 400;
+            throw error
 
         }
-        res.status(200).json({ success: true, data:category})
+       return  res.status(200).json({ success: true, data:category})
 
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: err})
+        // return res.status(400).json({success : false,data: err})
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
        
     }
 
@@ -110,32 +152,35 @@ exports.updateCategory = async( req, res) => {
 
 
 // Delete category
-exports.deleteCategory = async( req, res) =>{
+exports.deleteCategory = async( req, res,next) =>{
 
     try {
 
-        if(req.category.products.length > 0 ){
-            return res.status(400).json({success : false,data: 'Delete all products before deleting category'})
+        const product = Product.find({category:req.params.categoryId})
+        if(product.length >0){
+            // return res.status(400).json({success : false,data: "delete asscociated products to delete category"})
+            const error = new Error("delete asscociated products to delete category")
+            error.statusCode = 400;
+            throw error
 
         }
         const category = await Category.findByIdAndDelete(req.params.categoryId)
         if(!category) {
-            return res.status(400).json({success : false,data: 'Category deletion failed'})
-        }
-
-        let index = req.department.categories.findIndex(category => req.params.categoryId === category.category_id);
-        req.department.categories.splice(index, 1)
-        let department = await Depatments.findByIdAndUpdate(req.params.departmentId, {$set:req.department}, {new:true, useFindAndModify: false})
-        if(!department){
-            return res.status(400).json({success : false,data: 'category deletion failed  in department'})
-
-        }
-        res.status(200).json({ success: true, data:category})
+            // return res.status(400).json({success : false,data: 'Category deletion failed'})
+            const error = new Error('Category deletion failed')
+            error.statusCode = 400;
+            throw error
+        }      
+        return res.status(200).json({ success: true, data:category})
 
     }
 
     catch( err){
-        return res.status(400).json({success : false,data: 'Category deletion failed'})
+        // return res.status(400).json({success : false,data: 'Category deletion failed'})
+        if(!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
        
     }
 

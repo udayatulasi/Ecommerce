@@ -12,8 +12,10 @@ const connectDB = async(res,err) =>{
     })
     console.log(`DB connected to ${ conn.connection.host}`)
 }
-catch{
-    console.log(err)
+catch(err){
+    err.statuscode = 500
+    next(err)
+   
 }
 }
 
