@@ -42,7 +42,7 @@ exports.getACategory = (req, res) => {
 
 
 // Get all categories
-exports.getAllCategories = async( req, res) => {
+exports.getAllCategories = async( req, res,next) => {
 
     try {
         const category = await Category.find().populate("department")
@@ -67,7 +67,7 @@ exports.getAllCategories = async( req, res) => {
 
 }
 
-exports.getAllDepartmentCategories = async( req, res) => {
+exports.getAllDepartmentCategories = async( req, res,next) => {
 
     try {
         const category = await Category.find(req.params.departmentId)
@@ -94,7 +94,7 @@ exports.getAllDepartmentCategories = async( req, res) => {
 
 
 // Create categories
-exports.createCategory = async( req, res) => {
+exports.createCategory = async( req, res,next) => {
 
     try {
         const category = await Category.create(req.body)
@@ -120,7 +120,7 @@ exports.createCategory = async( req, res) => {
 
 
 // Update category
-exports.updateCategory = async( req, res) => {
+exports.updateCategory = async( req, res,next) => {
     
     try {
         
@@ -152,7 +152,7 @@ exports.updateCategory = async( req, res) => {
 
 
 // Delete category
-exports.deleteCategory = async( req, res) =>{
+exports.deleteCategory = async( req, res,next) =>{
 
     try {
 

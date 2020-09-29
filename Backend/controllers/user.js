@@ -59,7 +59,7 @@ exports.getUser = async(req, res) => {
         return res.json(req.user)
 }
 
-exports.updateUser = async(req, res) => {
+exports.updateUser = async(req, res,next) => {
    
     try {
         let user = await User.findByIdAndUpdate(req.params.userId, {$set: req.body}, {
@@ -85,7 +85,7 @@ exports.updateUser = async(req, res) => {
      }
 }
 
-exports.userOrderList = async(req, res) => {
+exports.userOrderList = async(req, res,next) => {
    
     try {
         const order = await Order.find({user:req.params.userId})
@@ -109,7 +109,7 @@ exports.userOrderList = async(req, res) => {
 
 
 
-exports.deleteUser = async(req, res) => {
+exports.deleteUser = async(req, res,next) => {
    
     try {
         const user = await User.findByIdAndDelete(req.params.userId)

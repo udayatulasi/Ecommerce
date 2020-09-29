@@ -39,7 +39,7 @@ exports.getAProduct = (req, res) => {
 
 
 // Get all products
-exports.getAllProducts = async( req, res) => {
+exports.getAllProducts = async( req, res,next) => {
 
     try {
         const product = await Product.find().populate('category')
@@ -64,7 +64,7 @@ exports.getAllProducts = async( req, res) => {
     }
 }
 
-exports.getAllCategoryProducts = async( req, res) => {
+exports.getAllCategoryProducts = async( req, res,next) => {
 
     try {
         const product = await Product.find(req.params.categoryId)
@@ -92,7 +92,7 @@ exports.getAllCategoryProducts = async( req, res) => {
 
 
 // Create product
-exports.createProduct = async( req, res) => {
+exports.createProduct = async( req, res, next) => {
 
     try {
         
@@ -121,7 +121,7 @@ exports.createProduct = async( req, res) => {
 
 
 // Update product
-exports.updateProduct = async( req, res) => {
+exports.updateProduct = async( req, res, next) => {
 
     try {
         const product = await Product.findByIdAndUpdate(req.params.productId, {$set : req.body},{
@@ -151,7 +151,7 @@ exports.updateProduct = async( req, res) => {
 
 
 // Delete product
-exports.deleteProduct = async( req, res) =>{
+exports.deleteProduct = async( req, res, next) =>{
     try {
         const product = await Product.findByIdAndDelete(req.params.productId)
         if(!product) {

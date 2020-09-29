@@ -37,7 +37,7 @@ exports.signup = async(req, res, next) => {
 }
 
 
-exports.signin = async(req, res) => {
+exports.signin = async(req, res,next) => {
     
     try {
         const errors = validationResult(req)
@@ -82,7 +82,7 @@ exports.signin = async(req, res) => {
 }
 
 
-exports.signout = async (req, res) => {
+exports.signout = async (req, res,next) => {
 
   try {
     res.clearCookie("token")

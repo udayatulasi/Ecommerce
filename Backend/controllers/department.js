@@ -35,7 +35,7 @@ exports.getADepartment = async(req, res) => {
 
 
 // Get all products
-exports.getAllDepartments = async( req, res) => {
+exports.getAllDepartments = async( req, res,next) => {
 
     try {
         const department = await Departments.find()
@@ -62,7 +62,7 @@ exports.getAllDepartments = async( req, res) => {
 
 
 // Create product
-exports.createDepartment = async( req, res) => {
+exports.createDepartment = async( req, res,next) => {
     try {
         let createdDepartment = Departments.find({name:req.body.name})
         if(!createdDepartment){
@@ -95,7 +95,7 @@ exports.createDepartment = async( req, res) => {
 
 
 // Update product
-exports.updateDepartment = async( req, res) => {
+exports.updateDepartment = async( req, res,next) => {
 
     try {
         
@@ -122,7 +122,7 @@ exports.updateDepartment = async( req, res) => {
 }
 
 
-exports.deleteDepartment = async( req, res) =>{
+exports.deleteDepartment = async( req, res,next) =>{
     try {
         let categories = await Category.find({department:req.params.departmentId})
         if(categories.length>0){
