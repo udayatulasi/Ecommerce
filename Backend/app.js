@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
-
+const multer = require("multer")
+const path = require("path")
 const departmentRoutes = require("./routes/department")
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/user")
@@ -18,14 +19,15 @@ DBconnection();
 
 
 
+
+
 // middleware
 app.use(bodyParser.json());
-app.use(cookieParser( ));
+app.use(cookieParser());
 app.use(cors());
-
-
+// app.use(multer({storage:fileStorage}).array("images",10))
 // routes
-
+app.use("/images",express.static(path.join(__dirname,'images')))
 app.use("/ecommerce",authRoutes)
 app.use("/ecommerce",userRoutes)
 app.use("/ecommerce",orderRoutes)
@@ -33,6 +35,7 @@ app.use("/ecommerce",departmentRoutes)
 app.use("/ecommerce",categoryRoutes)
 app.use("/ecommerce",productRoutes)
 app.use("/ecommerce",userRoutes)
+
 
 app.use((error, req, res, next) => {
  
@@ -42,12 +45,6 @@ app.use((error, req, res, next) => {
     const data = error.data;
     res.status(status).json({success: false, message: message, data: data});
 });
-
-
-
-
-
-
 
 
 

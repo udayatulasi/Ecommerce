@@ -43,9 +43,9 @@ const productsSchema = new mongoose.Schema({
         trim : true,
         required : true
     },
-    image : {
-        data : Buffer,
-        contentType : String,  
+    images : {
+      type:Array,
+      required:true 
     },
 }, {
     timestamps : true

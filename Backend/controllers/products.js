@@ -1,6 +1,33 @@
 const Product = require('../models/products')
 const Category = require('../models/categories')
+const multer = require("multer")
+const fs = require("fs")
+const { v4: uuidv4 } = require('uuid');
+const mongoose = require('mongoose');
+// const { upload } = require('../app')
 // Get a product by Id
+
+
+// const fileStorage = multer.diskStorage({
+//     destination:(req,file,cb)=>{
+//         const dir =`./images`
+//         const exist =fs.existsSync(dir)
+//         console.log(exist)
+//         // if(!exist){
+//         //     return fs.mkdir(dir, error => cb(null, dir))
+//         // }
+//         return cb(null,dir)
+//     },
+//     filename:(req,file,cb)=>{
+//         cb(null,file.fieldname + "-" +req.body._id+ path.extname(file.originalname))  
+//     }
+//   })
+  
+  
+  
+//   const upload = multer({storage:fileStorage})
+
+
 exports.getProductById = async( req, res,next) => {
     try {
         
@@ -91,22 +118,27 @@ exports.getAllCategoryProducts = async( req, res,next) => {
 }
 
 
+
 // Create product
 exports.createProduct = async( req, res, next) => {
-
     try {
-        
+        if(!req.files){
+            const error = new Error("upload images")
+            error.statusCode = 422
+            throw error
+        }
+        const images = req.files.map(file=>{return file.path})
+        req.body.images = images
+        req.body._id = req.id
         const product = await Product.create(req.body)
         if(!product) {
             // return res.status(400).json({success : false,data: 'Product creation failed'})
             const error = new Error('cannot get create product')
             error.statusCode = 400;
             throw error
-
         }
         let products = {  product_id : product._id }        
         res.status(200).json({ success: true, data: products})
-
     }
 
     catch( err){
