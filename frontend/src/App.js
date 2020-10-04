@@ -12,11 +12,9 @@ function App() {
   return (
 
       <Router>
-              <Header />
         <Switch>
               <Route path='/' component={Home} />
         </Switch>
-              <Footer />
       </Router>
 
    
