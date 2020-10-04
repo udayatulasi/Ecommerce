@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Body from '../components/Body';
-
+import Footer from "../components/Footer"
 // Importing all files
 import TopCarousel from './landingPageTopCarousel/TopCarousel'
 
@@ -10,7 +9,7 @@ export default function Home() {
         <div>
           <TopCarousel />
           <Body />
-          
+          <Footer />
         </div>
     )
 }
