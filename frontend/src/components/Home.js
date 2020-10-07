@@ -14,9 +14,10 @@ export default function Home() {
         <Scroll />
         <Headers />
            <h6>Home component</h6>
-        <Footer1 />
+        <Footer1 />         
         <Footer2 />
         <Footer />
+
         </div>
     )
 }
