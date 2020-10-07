@@ -16,11 +16,11 @@ import ContactUs from  './pages/ContactUs';
 
 
 
+
 function App() {
   return (
 
       <Router>
-              <Header />
         <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/products" component={Products}/>
@@ -29,7 +29,6 @@ function App() {
               <Route exact path="/contactus" component={ContactUs}/>
 
         </Switch>
-              <Footer />
       </Router>
 
    
