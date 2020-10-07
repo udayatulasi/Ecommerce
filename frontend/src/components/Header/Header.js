@@ -62,10 +62,10 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: "relative",
-    align: "center",
+    // align: "center",
     width: "80%",
     height: "3em",
-    marginLeft: "7em",
+    // marginLeft: "3em",
     border: " 2px solid #DCDCDC",
     borderRadius: "25px",
   },
@@ -145,7 +145,8 @@ const useStyles = makeStyles((theme) => ({
     setAnchorEl(null)
     setOpen(false)
   }
-
+  
+ 
   const tabs = (
     <React.Fragment>
       <Hidden smDown>
@@ -200,7 +201,19 @@ const useStyles = makeStyles((theme) => ({
               to="/contactus"
               style={{ color: "black" }}
             />
+
+            <Tab
+              disableRipple
+              className={classes.tabs}
+              label="Login/Signup"
+              component = {Link}
+              to="/contactus"
+              style={{ color: "black" }}
+            />
           </Tabs>
+
+          
+          
           <Menu
           id="products-menu"
           anchorEl={anchorEl}
@@ -243,7 +256,7 @@ const useStyles = makeStyles((theme) => ({
         <Grid
           container
           direction="row"
-          justify="space-between"
+          justify="space-evenly"
           alignItems="center"
           className={classes.appbarContent}
         >
@@ -254,7 +267,7 @@ const useStyles = makeStyles((theme) => ({
             {matchesSM ? <SideDrawer /> : null }
           </Grid>
 
-          <Grid item xs={1}>
+          <Grid item sm>
             <Button>
               <img
                 src={LogoImage}
@@ -265,7 +278,7 @@ const useStyles = makeStyles((theme) => ({
             </Button>
           </Grid>
           <Hidden xsDown>
-            <Grid item xs={7}>
+            <Grid item sm={7}>
               <div className={classes.search}>
                 <div>
                   <SearchIcon className={classes.searchicon} />
@@ -284,11 +297,9 @@ const useStyles = makeStyles((theme) => ({
 
           {/* login & cart */}
           <Hidden xsDown>
-            <Grid item xs={2}>
+            <Grid item sm>
               <Grid container direction="row" justify="space-between" alignItems="center">
-                <Button>
-                  <Typography>Login/Signup</Typography>
-                </Button>
+                
                 <IconButton>
                   <AddShoppingCartIcon />
                 </IconButton>
