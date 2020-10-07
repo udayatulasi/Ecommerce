@@ -3,15 +3,13 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 
 // Import all files
-import Header from './components/Header/Header'
 import  Home  from './components/Home'
-import Footer from './components/Footer'
 
 // pages
-import Products from './pages/Products';
-import AboutUs    from  './pages/AboutUs';
-import Blog      from './pages/Blog';
-import ContactUs from  './pages/ContactUs';
+import Products from './Common/pages/Products';
+import AboutUs    from  './Common/pages/AboutUs';
+import Blog      from './Common/pages/Blog';
+import ContactUs from  './Common/pages/ContactUs';
 
 
 

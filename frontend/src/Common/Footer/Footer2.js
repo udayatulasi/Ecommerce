@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 import Grid from "@material-ui/core/Grid"
 import React from 'react'
-import Image from "./img1.jpg"
+import Image from "../../assessts/img1.jpg"
 
 const useStyles = makeStyles(theme => ({
     latestD: {

@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import PhoneIcon from '@material-ui/icons/Phone';
 import { ListItemIcon } from '@material-ui/core';
 
-import Image from './logo.png'
+import Image from "../../assessts/logo.png"
 
 
 const useStyles = makeStyles(theme => ({
