@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Footer() {
+export default function Blog() {
     return (
         <div>
-            
+    
         </div>
     )
 }
