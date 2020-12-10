@@ -6,8 +6,12 @@ const cookieParser = require("cookie-parser");
 const DBconnection = require('./config/dbconfig')
 const cors = require("cors");
 
-
-
+const departmentRoutes = require("./routes/department")
+const authRoutes = require("./routes/auth")
+const userRoutes = require("./routes/user")
+const categoryRoutes = require("./routes/categories")
+const productRoutes = require("./routes/products")
+const orderRoutes = require("./routes/order")
 // DB connect
 dotenv.config({path:'./config/db.env'});
 DBconnection();
@@ -18,6 +22,30 @@ DBconnection();
 app.use(bodyParser.json());
 app.use(cookieParser( ));
 app.use(cors());
+
+
+// routes
+
+app.use("/ecommerce",authRoutes)
+app.use("/ecommerce",userRoutes)
+app.use("/ecommerce",orderRoutes)
+app.use("/ecommerce",departmentRoutes)
+app.use("/ecommerce",categoryRoutes)
+app.use("/ecommerce",productRoutes)
+app.use("/ecommerce",userRoutes)
+
+app.use((error, req, res, next) => {
+ 
+
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
+    res.status(status).json({success: false, message: message, data: data});
+});
+
+
+
+
 
 
 
